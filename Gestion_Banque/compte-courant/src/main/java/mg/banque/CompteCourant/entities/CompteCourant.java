@@ -1,4 +1,4 @@
-package main.java.mg.banque.CompteCourant.entities;
+package main.java.mg.banque.comptecourant.entities;
 
 public class CompteCourant {
     

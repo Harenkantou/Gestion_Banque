@@ -1,4 +1,4 @@
-package main.java.mg.banque.CompteCourant.ejb;
+package main.java.mg.banque.comptecourant.ejb;
 
 public class CompteCourantEJB {
     

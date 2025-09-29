@@ -1,4 +1,4 @@
-package main.java.mg.banque.CompteCourant.services;
+package main.java.mg.banque.comptecourant.services;
 
 public class CompteCourantService {
     
