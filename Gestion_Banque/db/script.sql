@@ -38,15 +38,10 @@ CREATE TABLE Pret (
 
 CREATE TABLE transaction (
     id_transaction SERIAL PRIMARY KEY,
-    id_compte INT,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
     type_compte VARCHAR(20) CHECK (type_compte IN ('courant', 'depot')),
+    id_compte INT NOT NULL,
     montant NUMERIC(15,2) NOT NULL,
     type_transaction VARCHAR(10) CHECK (type_transaction IN ('depot', 'retrait')),
-    date_transaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_compte, type_compte) REFERENCES 
-        (CASE 
-            WHEN type_compte = 'courant' THEN compte_courant(id_compte)
-            WHEN type_compte = 'depot' THEN compte_depot(id_compte)
-        END) ON DELETE CASCADE
+    date_transaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
