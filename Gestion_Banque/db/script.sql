@@ -10,7 +10,7 @@ CREATE TABLE client (
 );
 
 CREATE TABLE compte_courant (
-    id_compte SERIAL PRIMARY KEY,
+    id_compte_courant SERIAL PRIMARY KEY,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
     taux_annuel NUMERIC(5,2) DEFAULT 0,
     solde NUMERIC(15,2) DEFAULT 0,
@@ -18,7 +18,7 @@ CREATE TABLE compte_courant (
 );
 
 CREATE TABLE compte_depot (
-    id_compte SERIAL PRIMARY KEY,
+    id_compte_depot SERIAL PRIMARY KEY,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
     taux_annuel NUMERIC(5,2) DEFAULT 0,
     seuil_minimum NUMERIC(15,2),
@@ -26,7 +26,7 @@ CREATE TABLE compte_depot (
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Pret (
+CREATE TABLE pret (
     id_pret SERIAL PRIMARY KEY,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
     montant NUMERIC(15,2) NOT NULL,
