@@ -1,0 +1,43 @@
+<project name="compte-courant" default="deploy">
+    
+    <property name="wildfly.home" value="D:/app/wildfly-28.0.1.Final/wildfly-28.0.1.Final"/>
+    <property name="deploy.dir" value="${wildfly.home}/standalone/deployments"/>
+    <property name="src.dir" value="main/java"/>
+    <property name="resources.dir" value="main/resources"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="lib"/>
+    
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <mkdir dir="${build.dir}"/>
+    </target>
+    
+    <target name="compile" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"
+               classpathref="classpath" includeantruntime="false"/>
+        <copy todir="${classes.dir}">
+            <fileset dir="${resources.dir}" excludes="**/*.java"/>
+        </copy>
+    </target>
+    
+    <target name="package" depends="compile">
+        <jar destfile="${build.dir}/compte-courant.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Built-By" value="Banking System"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="deploy" depends="package">
+        <copy file="${build.dir}/compte-courant.jar" todir="${deploy.dir}"/>
+        <echo message="Application déployée avec succès dans WildFly"/>
+    </target>
+</project>

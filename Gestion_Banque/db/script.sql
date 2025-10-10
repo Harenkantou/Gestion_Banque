@@ -12,7 +12,7 @@ CREATE TABLE client (
 CREATE TABLE compte_courant (
     id_compte_courant SERIAL PRIMARY KEY,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
-    taux_annuel NUMERIC(5,2) DEFAULT 0,
+    taux_annuel NUMERIC(5,4) DEFAULT 0,
     solde NUMERIC(15,2) DEFAULT 0,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -20,17 +20,20 @@ CREATE TABLE compte_courant (
 CREATE TABLE compte_depot (
     id_compte_depot SERIAL PRIMARY KEY,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
-    taux_annuel NUMERIC(5,2) DEFAULT 0,
+    taux_annuel NUMERIC(5,4) DEFAULT 0,
     seuil_minimum NUMERIC(15,2),
     solde NUMERIC(15,2) DEFAULT 0,
+    --nouvelle colonne pour la règle 1fois/mois
+    date_derniere_operation TIMESTAMP,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE pret (
     id_pret SERIAL PRIMARY KEY,
     id_client INT REFERENCES client(id_client) ON DELETE CASCADE,
-    montant NUMERIC(15,2) NOT NULL,
-    taux_annuel NUMERIC(5,2) NOT NULL,
+    montant_initial NUMERIC(15,2) NOT NULL,-- renommé pour clarté
+    solde_restant_du NUMERIC(15,2) NOT NULL,-- montant restant à rembourser
+    taux_annuel NUMERIC(5,4) NOT NULL,--taux annuel avec précision
     duree_mois INT NOT NULL,
     date_debut TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_fin TIMESTAMP
